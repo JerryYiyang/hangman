@@ -25,12 +25,9 @@ def main():
     for char in word:
         w.append(char)
     index = []
+    del(w[-1])
 #checking if choice is in word
-    for i in range(w):
-        if choice == x:
-            index.append(i)
-        else:
-            print("Sorry, this letter is not in the word.")
+    check(w)
     for i in index:
         spaces[i] = choice
     print(spaces)
@@ -43,6 +40,19 @@ def get_choice():
         return get_choice()
     else:
         return choice.lower()
+
+
+def check(word):
+    check = False
+    for i in range(len(w)):
+        if choice == w[i]:
+            index.append(i)
+            check = True
+    if check == False:
+        print("Sorry, this letter is not in the word.")
+
+
+
 
 if __name__ == '__main__':
     main()
