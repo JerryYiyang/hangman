@@ -13,8 +13,8 @@ def main():
 #picks random word and prints corresponding 'empty' spaces
     word = random.choice(words)
     word.rstrip('\n')
-    spaces = ['._'] * len(word)
-    for s in spaces:    
+    spaces = ['._'] * (len(word) - 1)
+    for s in spaces: 
         print(s, end='')
     print("\n")
 #getting choices
@@ -24,14 +24,17 @@ def main():
         w.append(char)
     del(w[-1])
     wrong = 0
-    print(w)
     while '._' in spaces:
         choice = get_choice()
+        if choice in tried:
+            print("You already tried this letter!")
+            choice = get_choice()
+        else:
+            tried.append(choice)
 #checking if choice is in word
         c = check(w, choice)
 #if choice is in word then it replaces the "._" in spaces with the letter
         if c is not False:
-            print(c)
             for x in c:
                 spaces[x] = choice
             for s in spaces:
@@ -42,6 +45,9 @@ def main():
             print("Sorry, your choice is not in the word.")
             wrong += 1
             print_hangman(wrong)
+    else:
+        print("Congratulations, you got the word and saved the hangman!")
+        quit()
 
 
 def get_choice():
@@ -59,9 +65,10 @@ def check(word, choice):
     for i in range(len(word)):
         if choice == word[i]:
             index.append(i)
-        check = True
+            check = True
+    if check == True:
         return index
-    if check == False:
+    else:
         return False
 
 
@@ -73,17 +80,17 @@ def print_hangman(w):
         print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  "  |   | ")
         print("      | \n" + "      | \n" + "=========")
     if w == 3:
-        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  "  |   | ")
-        print(" /|   | \n" + "      | \n" + "=========")
+        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  " /|   | ")
+        print("      | \n" + "      | \n" + "=========")
     if w == 4:
-        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  "  |   | ")
-        print(" /|\  | \n" + "      | \n" + "=========") 
+        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  " /|\  | ")
+        print("      | \n" + "      | \n" + "=========") 
     if w == 5:
-        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  "  |   | ")
-        print(" /|\  | \n" + " /    | \n" + "=========")
+        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  " /|\  | ")
+        print(" /    | \n" + "      | \n" + "=========")
     if w == 6:
-        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  "  |   | ")
-        print(" /|\  | \n" + " / \  | \n" + "=========")
+        print("  +---+ \n" + "  |   | \n" + "  o   | \n" +  " /|\  | ")
+        print(" / \  | \n" + "      | \n" + "=========")
         print("Oh no! The hangman was hung! You lost :(")
         quit()
 
